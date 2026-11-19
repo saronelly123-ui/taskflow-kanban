@@ -1,0 +1,597 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f5fb;
+  color: #25243a;
+}
+
+.navbar {
+  background: white;
+  padding: 20px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px #0000000d;
+}
+
+.navbar h1 {
+  color: #6654d9;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 25px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #444;
+  font-weight: bold;
+}
+
+.board-container {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 0 25px;
+}
+
+.board-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.board-heading h2 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.board-heading p {
+  color: #777;
+}
+
+.add-button,
+.task-form button {
+  background: #6654d9;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.kanban-column {
+  background: #e9e9f2;
+  padding: 18px;
+  border-radius: 12px;
+  min-height: 300px;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.task-count {
+  background: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.column-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.task-card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 8px #00000008;
+}
+
+.task-card-top,
+.task-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+.task-link p {
+  color: #777;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.priority {
+  font-size: 12px;
+  padding: 5px 9px;
+  border-radius: 20px;
+}
+
+.priority.high {
+  background: #ffe0e0;
+  color: #d33;
+}
+
+.priority.medium {
+  background: #fff0ce;
+  color: #a66b00;
+}
+
+.priority.low {
+  background: #dff5e8;
+  color: #16834a;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #d33;
+  cursor: pointer;
+}
+
+.task-card select,
+.task-form input,
+.task-form textarea,
+.task-form select {
+  padding: 9px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.task-form {
+  background: white;
+  padding: 20px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 12px;
+}
+
+.loading,
+.empty-message {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+}
+
+@media (max-width: 800px) {
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+
+  .board-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+/* FILTER BAR */
+.filter-bar {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filter-bar input {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.filter-bar input:focus {
+  border-color: #6654d9;
+}
+
+.priority-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.priority-filters button {
+  padding: 9px 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.priority-filters button:hover {
+  background: #f0edff;
+  border-color: #6654d9;
+}
+
+.priority-filters button.active-filter {
+  background: #6654d9;
+  color: white;
+  border-color: #6654d9;
+}
+
+.task-form h3 {
+  margin-bottom: 5px;
+}
+
+.task-form button:hover,
+.add-button:hover {
+  background: #5040b5;
+}
+
+@media (max-width: 600px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar input {
+    width: 100%;
+  }
+
+  .priority-filters {
+    justify-content: flex-start;
+  }
+
+  .priority-filters button {
+    flex: 1;
+  }
+}
+
+/* DASHBOARD STATISTICS */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin: 25px 0;
+}
+
+.stat-card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #eeeaf7;
+  box-shadow: 0 4px 15px rgba(30, 20, 60, 0.04);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.stat-card p {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.stat-card h2 {
+  font-size: 26px;
+  color: #25243a;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+.stat-icon.purple {
+  background: #eeeaff;
+}
+
+.stat-icon.blue {
+  background: #e5f1ff;
+}
+
+.stat-icon.orange {
+  background: #fff0dc;
+}
+
+.stat-icon.green {
+  background: #e1f7e9;
+}
+
+/* PROGRESS SECTION */
+
+.progress-section {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  border: 1px solid #eeeaf7;
+}
+
+.progress-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.progress-heading h3 {
+  font-size: 16px;
+}
+
+.progress-heading span {
+  color: #6654d9;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.progress-track {
+  height: 10px;
+  background: #eeeaf7;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #6654d9;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.progress-section > p {
+  color: #888;
+  font-size: 13px;
+}
+
+/* RESPONSIVE DASHBOARD */
+
+@media (max-width: 1000px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px 10px;
+    gap: 9px;
+  }
+
+  .stat-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .stat-card h2 {
+    font-size: 21px;
+  }
+
+  .stat-card p {
+    font-size: 11px;
+  }
+
+  .progress-section {
+    padding: 16px;
+  }
+}
+
+/* DASHBOARD STATISTICS */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin: 25px 0;
+}
+
+.stat-card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #eeeaf7;
+  box-shadow: 0 4px 15px rgba(30, 20, 60, 0.04);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.stat-card p {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.stat-card h2 {
+  font-size: 26px;
+  color: #25243a;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+.stat-icon.purple {
+  background: #eeeaff;
+}
+
+.stat-icon.blue {
+  background: #e5f1ff;
+}
+
+.stat-icon.orange {
+  background: #fff0dc;
+}
+
+.stat-icon.green {
+  background: #e1f7e9;
+}
+
+/* PROGRESS SECTION */
+
+.progress-section {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  border: 1px solid #eeeaf7;
+}
+
+.progress-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.progress-heading h3 {
+  font-size: 16px;
+}
+
+.progress-heading span {
+  color: #6654d9;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.progress-track {
+  height: 10px;
+  background: #eeeaf7;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #6654d9;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.progress-section > p {
+  color: #888;
+  font-size: 13px;
+}
+
+/* RESPONSIVE DASHBOARD */
+
+@media (max-width: 1000px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px 10px;
+    gap: 9px;
+  }
+
+  .stat-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .stat-card h2 {
+    font-size: 21px;
+  }
+
+  .stat-card p {
+    font-size: 11px;
+  }
+
+  .progress-section {
+    padding: 16px;
+  }
+}
+
+
+.progress-section {
+  width: 100%;
+  display: block;
+  margin-bottom: 25px;
+}
+
+.board-heading {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+  .progress-section {
+    width: 100%;
+  }
+
+  .board-heading {
+    gap: 15px;
+  }
+}
