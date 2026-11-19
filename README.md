@@ -116,9 +116,6 @@ This project demonstrates:
 ## Author
 
 **Saro Nelly**
-## Author
-
-**Saro Nelly**
 
 GitHub:https://github.com/saronelly123-ui/taskflow-kanban.git
 
